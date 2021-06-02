@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
-    var emojis = ["✈️", "🚛", "🚄", "🚟", "🛵", "🚞", "🛶", "🛩", "🚜", "🏎", "🚢", "🚔", "🚁", "🚊", "🚅", "🛫", "🚇", "🚲", "🚍", "🛺"]
-    var symbols = ["✝️", "💛", "❤️", "☯️", "🛑", "📛", "1️⃣", "🔢", "♿️", "🎵", "©️", "🔉", "㊙️", "💞", "🔱", "🈂️", "❇️", "🚼", "🈁", "✳️"]
-    var objects = ["📱", "🎥", "⌛️", "🔦", "⏲", "🎛", "💵", "🔨", "🧱", "🔫", "💊", "🔮", "⚰️", "⚱️", "🔭", "🛏", "🧧", "📫", "🏷", "📆"]
+    @State var emojis = ["✈️", "🚛", "🚄", "🚟", "🛵", "🚞", "🛶", "🛩", "🚜", "🏎", "🚢", "🚔", "🚁", "🚊", "🚅", "🛫", "🚇", "🚲", "🚍", "🛺"]
+    @State var symbols = ["✝️", "💛", "❤️", "☯️", "🛑", "📛", "1️⃣", "🔢", "♿️", "🎵", "©️", "🔉", "㊙️", "💞", "🔱", "🈂️", "❇️", "🚼", "🈁", "✳️"]
+    @State var objects = ["📱", "🎥", "⌛️", "🔦", "⏲", "🎛", "💵", "🔨", "🧱", "🔫", "💊", "🔮", "⚰️", "⚱️", "🔭", "🛏", "🧧", "📫", "🏷", "📆"]
     //Counts of emoji
-    @State var emojiCount = 9
+    @State var emojiCount = Int.random(in: 8..<20)
     //Check for the which button has been pressed
     @State var emojiType = 0
     var body: some View {
@@ -22,6 +22,7 @@ struct ContentView: View {
             ScrollView {
                 LazyVGrid (columns: [GridItem(.adaptive(minimum: 65))]){
                     if(emojiType == 0){
+                        
                         ForEach(emojis[0..<emojiCount], id: \.self) {emoji in
                             CardView(content: emoji).aspectRatio(2/3, contentMode: .fit)
                         }
@@ -65,22 +66,38 @@ struct ContentView: View {
     var emojiButton : some View {
         Button {
             emojiType = 0
+            emojiCount = Int.random(in: 8..<20)
+            emojis.shuffle()
         } label : {
-            Image(systemName: "book.circle")
+            VStack{
+                Image(systemName: "book.circle")
+                Text("Vehicles").font(.footnote)
+            }
         }
     }
     var faceButton : some View {
         Button {
             emojiType = 1
+            emojiCount = Int.random(in: 8..<20)
+            symbols.shuffle()
         } label : {
-            Image(systemName: "character.book.closed")
+            VStack{
+                Image(systemName: "character.book.closed")
+                Text("Symbols").font(.footnote)
+            }
         }
     }
     var objectsButton : some View {
         Button {
             emojiType = 2
+            emojiCount = Int.random(in: 8..<20)
+            objects.shuffle()
         } label : {
-            Image(systemName: "bookmark")
+            VStack{
+                Image(systemName: "bookmark")
+                Text("Objects").font(.footnote)
+            }
+            
         }
     }
     //DEAD CODE
