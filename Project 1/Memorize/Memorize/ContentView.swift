@@ -9,24 +9,43 @@ import SwiftUI
 
 struct ContentView: View {
     var emojis = ["✈️", "🚛", "🚄", "🚟", "🛵", "🚞", "🛶", "🛩", "🚜", "🏎", "🚢", "🚔", "🚁", "🚊", "🚅", "🛫", "🚇", "🚲", "🚍", "🛺"]
-    var faces = ["😃", "😁", "🥲", "🤓", "🥰", "🤓", "🧐", "🤨", "😔", "😎", "🥸", "🥳", "🤩", "😡", "😤", "🤯", "😐", "🥺", "😞", "🥶"]
-    @State var emojiCount = 4
+    var symbols = ["✝️", "💛", "❤️", "☯️", "🛑", "📛", "1️⃣", "🔢", "♿️", "🎵", "©️", "🔉", "㊙️", "💞", "🔱", "🈂️", "❇️", "🚼", "🈁", "✳️"]
+    var objects = ["📱", "🎥", "⌛️", "🔦", "⏲", "🎛", "💵", "🔨", "🧱", "🔫", "💊", "🔮", "⚰️", "⚱️", "🔭", "🛏", "🧧", "📫", "🏷", "📆"]
+    //Counts of emoji
+    @State var emojiCount = 9
+    //Check for the which button has been pressed
+    @State var emojiType = 0
     var body: some View {
         VStack{
         // variable type: behavior type
+            titleText
             ScrollView {
                 LazyVGrid (columns: [GridItem(.adaptive(minimum: 65))]){
-                    ForEach(emojis[0..<emojiCount], id: \.self) {emoji in
-                        CardView(content: emoji).aspectRatio(2/3, contentMode: .fit)
+                    if(emojiType == 0){
+                        ForEach(emojis[0..<emojiCount], id: \.self) {emoji in
+                            CardView(content: emoji).aspectRatio(2/3, contentMode: .fit)
+                        }
+                    }else if (emojiType == 1){
+                        ForEach(symbols[0..<emojiCount], id: \.self) {face in
+                            CardView(content: face).aspectRatio(2/3, contentMode: .fit)
+                        }
+                    }else{
+                        ForEach(objects[0..<emojiCount], id: \.self) {object in
+                            CardView(content: object).aspectRatio(2/3, contentMode: .fit)
+                        }
                     }
                 }
             }
             .foregroundColor(.red)
             Spacer()
             HStack{
-                remove
+                //remove
+                emojiButton
                 Spacer()
-                add
+                //add
+                faceButton
+                Spacer()
+                objectsButton
             }
             .font(.largeTitle)
             .padding(.horizontal)
@@ -37,6 +56,34 @@ struct ContentView: View {
 
     }//LEGO
     
+    //Title text for Memorize
+    var titleText : some View {
+        Text("Memorize!")
+            .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+    }
+    //Buttons to switch between the emoji types
+    var emojiButton : some View {
+        Button {
+            emojiType = 0
+        } label : {
+            Image(systemName: "book.circle")
+        }
+    }
+    var faceButton : some View {
+        Button {
+            emojiType = 1
+        } label : {
+            Image(systemName: "character.book.closed")
+        }
+    }
+    var objectsButton : some View {
+        Button {
+            emojiType = 2
+        } label : {
+            Image(systemName: "bookmark")
+        }
+    }
+    //DEAD CODE
     var remove: some View {
         Button {
             if emojiCount > 1{
@@ -58,8 +105,8 @@ struct ContentView: View {
             Image(systemName: "plus.circle")
         }
     }
+    //END DEAD
 }
-
 struct CardView: View {
     var content: String
     //isFaceUp checks for the card facing up or down
@@ -86,8 +133,12 @@ struct CardView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
-            .preferredColorScheme(.dark)
+        Group {
+            ContentView()
+                .preferredColorScheme(.dark)
+            ContentView()
+                .preferredColorScheme(.dark)
+        }
         ContentView()
             .preferredColorScheme(.light)
     }
