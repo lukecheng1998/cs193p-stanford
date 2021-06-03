@@ -6,10 +6,10 @@
 //
 
 import SwiftUI
-
+//View
 struct ContentView: View {
     var emojis = ["✈️", "🚛", "🚄", "🚟", "🛵", "🚞", "🛶", "🛩", "🚜", "🏎", "🚢", "🚔", "🚁", "🚊", "🚅", "🛫", "🚇", "🚲", "🚍", "🛺"]
-    @State var emojiCount = 4
+    @State var emojiCount = 20
     var body: some View {
         VStack{
         // variable type: behavior type
@@ -23,9 +23,9 @@ struct ContentView: View {
             .foregroundColor(.red)
             Spacer()
             HStack{
-                remove
+                //remove
                 Spacer()
-                add
+                //add
             }
             .font(.largeTitle)
             .padding(.horizontal)
