@@ -12,7 +12,10 @@ struct MemoryGame <CardContent> where CardContent : Equatable {
     private(set) var cards : Array<Card>
     
     //game logic
-    private var indexOfTheOneAndOnlyFaceUpCard : Int?
+    private var indexOfTheOneAndOnlyFaceUpCard : Int? {
+        get { cards.indices.filter({ cards[$0].isFaceUp }).oneAndOnly }
+        set { cards.indices.forEach{ cards[$0].isFaceUp = ($0 == newValue) } }
+    }
     
     //the _ represents no external name for it. Also example of how a function is used
     mutating func choose(_ card: Card){
@@ -26,21 +29,15 @@ struct MemoryGame <CardContent> where CardContent : Equatable {
                     cards[chosenIndex].isMatched = true
                     cards[potentialMatchIndex].isMatched = true
                 }
-                indexOfTheOneAndOnlyFaceUpCard = nil
+                cards[chosenIndex].isFaceUp = true
             }else{
-                for index in cards.indices {
-                    cards[index].isFaceUp = false
-                }
                 indexOfTheOneAndOnlyFaceUpCard = chosenIndex
             }
-            cards[chosenIndex].isFaceUp.toggle()
         }
-        
-        print("\(cards)")
     }
     //automatically initializes the cards
     init(numberOfPairsOfCards : Int, createCardContent: (Int) -> CardContent) {
-        cards = Array<Card>()
+        cards = []
         //add numberOfPairsOfCards x 2 cards to cards array
         for pairIndex in 0..<numberOfPairsOfCards {
             let content = createCardContent(pairIndex)
@@ -53,12 +50,22 @@ struct MemoryGame <CardContent> where CardContent : Equatable {
     //Nesting this, this is a memory game card
     struct Card : Identifiable{
         
-        var isFaceUp : Bool = false
-        var isMatched : Bool = false
+        var isFaceUp = false
+        var isMatched = false
         
         //Abstract variable for this
-        var content : CardContent
+        let content : CardContent
         //Identifiable
-        var id: Int
+        let id: Int
+    }
+}
+
+extension Array {
+    var oneAndOnly : Element? {
+        if count == 1{
+            return first
+        }else{
+            return nil
+        }
     }
 }

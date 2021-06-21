@@ -9,6 +9,8 @@ import SwiftUI
 //View Model
 class EmojiMemoryGame : ObservableObject {
     
+    typealias Card = MemoryGame<String>.Card
+    
     //Global variable but within a class, like nesting card here
     static let emojis = ["✈️", "🚛", "🚄", "🚟", "🛵", "🚞", "🛶", "🛩", "🚜", "🏎", "🚢", "🚔", "🚁", "🚊", "🚅", "🛫", "🚇", "🚲", "🚍", "🛺"]
 
@@ -18,15 +20,15 @@ class EmojiMemoryGame : ObservableObject {
         }
     }
     //private (set) other models may look at the model but not change it
-    @Published private var model: MemoryGame<String> = createMemoryGame()
+    @Published private var model = createMemoryGame()
     
     //read only
-    var cards : Array <MemoryGame<String>.Card> {
+    var cards : Array <Card> {
         model.cards
     }
     //MARK - Intent(s)
     
-    func choose(_ card : MemoryGame<String>.Card){
+    func choose(_ card : Card){
         model.choose(card)
     }
 }
