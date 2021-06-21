@@ -12,6 +12,8 @@ class EmojiMemoryGame : ObservableObject {
     //Global variable but within a class, like nesting card here
     static let emojis = ["✈️", "🚛", "🚄", "🚟", "🛵", "🚞", "🛶", "🛩", "🚜", "🏎", "🚢", "🚔", "🚁", "🚊", "🚅", "🛫", "🚇", "🚲", "🚍", "🛺"]
 
+ 
+    
     static func createMemoryGame() -> MemoryGame <String> {
         MemoryGame<String>(numberOfPairsOfCards: 4){
             pairIndex in emojis[pairIndex]

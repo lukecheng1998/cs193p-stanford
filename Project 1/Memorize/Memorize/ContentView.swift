@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     
     @ObservedObject var viewModel: EmojiMemoryGame
+    @ObservedObject var flagViewModel : FlagMemoryGame
     
     var body: some View {
         // variable type: behavior type
@@ -23,6 +24,15 @@ struct ContentView: View {
                         }
                 }
             }
+            LazyVGrid (columns: [GridItem(.adaptive(minimum: 65))]){
+                ForEach(flagViewModel.cards) {card in
+                    CardView(card: card)
+                        .aspectRatio(2/3, contentMode: .fit)
+                        .onTapGesture {
+                            flagViewModel.choose(card)
+                        }
+                }
+            }.foregroundColor(.blue)
         }
         .foregroundColor(.red)
         //Complex Collection of views
@@ -30,7 +40,6 @@ struct ContentView: View {
 
 
     }//LEGO
-    
 }
 
 struct CardView: View {
@@ -61,9 +70,10 @@ struct CardView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         let game = EmojiMemoryGame()
-        ContentView(viewModel: game)
+        let flagGame = FlagMemoryGame()
+        ContentView(viewModel: game, flagViewModel: flagGame)
             .preferredColorScheme(.dark)
-        ContentView(viewModel: game)
+        ContentView(viewModel: game, flagViewModel: flagGame)
             .preferredColorScheme(.light)
     }
 }
