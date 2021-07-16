@@ -35,6 +35,9 @@ struct MemoryGame <CardContent> where CardContent : Equatable {
             }
         }
     }
+    mutating func shuffle() {
+        cards.shuffle()
+    }
     //automatically initializes the cards
     init(numberOfPairsOfCards : Int, createCardContent: (Int) -> CardContent) {
         cards = []
@@ -44,6 +47,7 @@ struct MemoryGame <CardContent> where CardContent : Equatable {
             cards.append(Card(content: content, id: pairIndex * 2))
             cards.append(Card(content: content, id: pairIndex * 2 + 1))
         }
+        cards.shuffle()
     }
     
     //Embedded struct. Actual name is called MemoryGame.Card, but shortened
